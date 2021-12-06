@@ -1,0 +1,27 @@
+var class_m_s_c15_communication =
+[
+    [ "MSC15Communication", "class_m_s_c15_communication_a4e3d486cc5b82400f1f85e7cf1c09cac.html#a4e3d486cc5b82400f1f85e7cf1c09cac", null ],
+    [ "~MSC15Communication", "class_m_s_c15_communication_a2c6231855b52a0cc4fbd97482f25b1e4.html#a2c6231855b52a0cc4fbd97482f25b1e4", null ],
+    [ "sendMessage", "class_m_s_c15_communication_a2789c436b35150d2362b96a774c57af7.html#a2789c436b35150d2362b96a774c57af7", null ],
+    [ "sendMessageReceiveBytes", "class_m_s_c15_communication_aa69cf19266728b549bc9e4956f10d8c0.html#aa69cf19266728b549bc9e4956f10d8c0", null ],
+    [ "sendMulti", "class_m_s_c15_communication_ad4837815a42989f1c7077c729f68d40b.html#ad4837815a42989f1c7077c729f68d40b", null ],
+    [ "sendMulti", "class_m_s_c15_communication_a84cdcb1e6e89855f06836c9209ad8182.html#a84cdcb1e6e89855f06836c9209ad8182", null ],
+    [ "sendFastMeasure", "class_m_s_c15_communication_a60ab53eae0377ce6ba8b3c675a4f9bde.html#a60ab53eae0377ce6ba8b3c675a4f9bde", null ],
+    [ "readStatus", "class_m_s_c15_communication_af55b2b3826e479ea458fa75cb48f7a7a.html#af55b2b3826e479ea458fa75cb48f7a7a", null ],
+    [ "interpretStatus", "class_m_s_c15_communication_afe03c8c4d16589a9488c1147a55bfbd9.html#afe03c8c4d16589a9488c1147a55bfbd9", null ],
+    [ "setMultiForGF", "class_m_s_c15_communication_a31d105d27da45b200e0ce333ac15c53f.html#a31d105d27da45b200e0ce333ac15c53f", null ],
+    [ "isConnected", "class_m_s_c15_communication_ac8b4744655f5a20c07d7bfa6167ff59c.html#ac8b4744655f5a20c07d7bfa6167ff59c", null ],
+    [ "readFirmwareVersionFromDevice", "class_m_s_c15_communication_a6c588edadc618fc7e8e64bc399d5ce60.html#a6c588edadc618fc7e8e64bc399d5ce60", null ],
+    [ "readLinearityADCFromDevice", "class_m_s_c15_communication_a5a3a0409e8ae6a1c65b13baa29fccd6d.html#a5a3a0409e8ae6a1c65b13baa29fccd6d", null ],
+    [ "readLinearityTimeFromDevice", "class_m_s_c15_communication_a74686a1d2a380d9ed038a6f0e24d4e5d.html#a74686a1d2a380d9ed038a6f0e24d4e5d", null ],
+    [ "readBandwidthFromDevice", "class_m_s_c15_communication_a4b8d2dc824a2429cf9708ee50d535f4c.html#a4b8d2dc824a2429cf9708ee50d535f4c", null ],
+    [ "readCalibFactorsFromDevice", "class_m_s_c15_communication_a6b64cdd2bef375635a8cdf2848ce373d.html#a6b64cdd2bef375635a8cdf2848ce373d", null ],
+    [ "readWavelengthMappingFromDevice", "class_m_s_c15_communication_a773d49f84a11714be444ee729e157458.html#a773d49f84a11714be444ee729e157458", null ],
+    [ "readStraylightFromDevice", "class_m_s_c15_communication_ab3c11a0f66e890a2456e09de205c56b7.html#ab3c11a0f66e890a2456e09de205c56b7", null ],
+    [ "readDarkTresholdFromDevice", "class_m_s_c15_communication_ae0972d5d771fc9bd28498b5cc4e32d1c.html#ae0972d5d771fc9bd28498b5cc4e32d1c", null ],
+    [ "readDarkOffsetFromDevice", "class_m_s_c15_communication_a1c10fd72522fe1be7e4a375737b0261f.html#a1c10fd72522fe1be7e4a375737b0261f", null ],
+    [ "readCountsByPixelFromDevice", "class_m_s_c15_communication_a3a569847ebc477af14a8aa5235286768.html#a3a569847ebc477af14a8aa5235286768", null ],
+    [ "initParams", "class_m_s_c15_communication_aff66e4ffc9111e561940fb0607f3ccf1.html#aff66e4ffc9111e561940fb0607f3ccf1", null ],
+    [ "deviceMutex", "class_m_s_c15_communication_af10d737a80430a587fa2d194c1246ff7.html#af10d737a80430a587fa2d194c1246ff7", null ],
+    [ "multiForGF", "class_m_s_c15_communication_a913a75ffccce287e1bb3c07f52e6623b.html#a913a75ffccce287e1bb3c07f52e6623b", null ]
+];
