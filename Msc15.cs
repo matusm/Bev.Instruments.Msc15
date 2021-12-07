@@ -67,7 +67,12 @@ namespace Bev.Instruments.Msc15
             return value;
         }
 
-
+        public double[] GetWLMapping()
+        {
+            double[] values = new double[288];
+            GOMDMSC15_getWLMapping(handle, values);
+            return values;
+        }
 
         private double GetInternalTemperature()
         {
@@ -256,6 +261,9 @@ namespace Bev.Instruments.Msc15
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getLastIntegrationTime(int handle, out double value);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getWLMapping(int handle, double[] values);
 
         private const string passwordBev = "sdg4poiJ";
         private bool disposed = false;
