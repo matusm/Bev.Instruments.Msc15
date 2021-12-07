@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 
 namespace Bev.Instruments.Msc15
@@ -17,9 +18,9 @@ namespace Bev.Instruments.Msc15
         public string DeviceName { get; private set; }
         public string InstrumentManufacturer => "Gigahertz-Optik";
         public string InstrumentType => GetInstrumentType();
-        public string InstrumentSerialNumber => GetDeviceSerialNumber();
+        public string InstrumentSerialNumber => $"{GetDeviceSerialNumber()}{GetDetectorSerialNumber()}";
         public string InstrumentFirmwareVersion => GetDeviceSoftwareVersion();
-        public string InstrumentID => $"{InstrumentType} {InstrumentFirmwareVersion} SN:{InstrumentSerialNumber}";
+        public string InstrumentID => $"{InstrumentType} FW:{InstrumentFirmwareVersion} SN:{InstrumentSerialNumber}";
         public bool HasShutter => DeviceHasShutter();
 
         public double PhotopicValue { get; private set; }
@@ -172,12 +173,26 @@ namespace Bev.Instruments.Msc15
 
         private string GetDeviceSoftwareVersion()
         {
-            return "<?>";
+            double value;
+            GOMDMSC15_getFirmwareVersion(handle, out value);
+            return value.ToString();
         }
 
         private string GetDeviceSerialNumber()
         {
-            return "<?>";
+            StringBuilder sb = new StringBuilder(255);
+            GOMDMSC15_getSerialNumber(handle, sb);
+            return sb.ToString();
+        }
+
+        private string GetDetectorSerialNumber()
+        {
+            StringBuilder sb = new StringBuilder(255);
+            GOMDMSC15_getDetectorSerialNumber(handle, sb);
+            string sn = sb.ToString();
+            if (string.IsNullOrWhiteSpace(sn))
+                return string.Empty;
+            return $"/{sn}";
         }
 
 
@@ -209,9 +224,6 @@ namespace Bev.Instruments.Msc15
         private static extern int GOMDMSC15_measureDarkOffset(int handle);
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern int GOMDMSC15_getSerialNumber(int handle, out string str);
-
-        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getMSC15DeviceType(int handle, out int type);
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
@@ -222,6 +234,16 @@ namespace Bev.Instruments.Msc15
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_setDynamicDarkMode(int handle, int mode);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getSerialNumber(int handle, StringBuilder sb);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getDetectorSerialNumber(int handle, StringBuilder sb);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getFirmwareVersion(int handle, out double value);
+
 
         private const string passwordBev = "sdg4poiJ";
         private bool disposed = false;
