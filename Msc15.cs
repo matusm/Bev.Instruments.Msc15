@@ -20,6 +20,7 @@ namespace Bev.Instruments.Msc15
         public string InstrumentSerialNumber => GetDeviceSerialNumber();
         public string InstrumentFirmwareVersion => GetDeviceSoftwareVersion();
         public string InstrumentID => $"{InstrumentType} {InstrumentFirmwareVersion} SN:{InstrumentSerialNumber}";
+        public bool HasShutter => DeviceHasShutter();
 
         public double PhotopicValue { get; private set; }
         public double ScotopicValue { get; private set; }
@@ -118,6 +119,30 @@ namespace Bev.Instruments.Msc15
             if (detecorType == 0)
                 return DeviceTypeToString(deviceType);
             return $"{DeviceTypeToString(deviceType)} + {DeviceTypeToString(detecorType)}";
+        }
+
+        private bool DeviceHasShutter()
+        {
+            int deviceType;
+            int detecorType;
+            GOMDMSC15_getMSC15DeviceType(handle, out deviceType);
+            GOMDMSC15_getDetectorType(handle, out detecorType);
+            return DeviceTypeHasShutter(deviceType) || DeviceTypeHasShutter(detecorType);
+        }
+
+        private bool DeviceTypeHasShutter(int type)
+        {
+            switch (type)
+            {
+                case 4:
+                    return true;
+                case 5:
+                    return true;
+                case 7:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         private string DeviceTypeToString(int type)
