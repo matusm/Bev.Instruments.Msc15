@@ -67,20 +67,31 @@ namespace Bev.Instruments.Msc15
             return value;
         }
 
-        public double[] GetWLMapping()
+        public SpectralValue[] GetSpectrum()
+        {
+            SpectralValue[] spectrum = new SpectralValue[288];
+            var wl = GetWLMapping();
+            var ir = GetSpectralDataByPixel();
+            for (int i = 0; i < spectrum.Length; i++)
+            {
+                spectrum[i] = new SpectralValue(wl[i], ir[i]);
+            }
+            return spectrum;
+        }
+
+        private double[] GetWLMapping()
         {
             double[] values = new double[288];
             GOMDMSC15_getWLMapping(handle, values);
             return values;
         }
 
-        public double[] GetSpectralDataByPixel()
+        private double[] GetSpectralDataByPixel()
         {
             double[] values = new double[288];
             GOMDMSC15_getSpectralDataByPixel(handle, values);
             return values;
         }
-
 
         private double GetInternalTemperature()
         {
