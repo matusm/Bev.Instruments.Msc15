@@ -10,8 +10,11 @@ namespace Bev.Instruments.Msc15
         {
             GOMDMSC15_setPassword(passwordBev);
             GOMDMSC15_getHandle(device, out handle);
+            InvalidateValues();
+            DeviceName = device;
         }
 
+        public string DeviceName { get; private set; }
         public string InstrumentManufacturer => "Gigahertz-Optik";
         public string InstrumentType => GetInstrumentType();
         public string InstrumentSerialNumber => GetDeviceSerialNumber();
@@ -25,6 +28,7 @@ namespace Bev.Instruments.Msc15
 
         public int Measure()
         {
+            InvalidateValues();
             bool invalid;
             GOMDMSC15_isOffsetInvalid(handle, out invalid);
             if (invalid)
@@ -32,9 +36,7 @@ namespace Bev.Instruments.Msc15
                 return -1;
             }
             int rc = GOMDMSC15_measure(handle);
-            GetCCT();
-            GetPhotopic();
-            GetScotopic();
+            PopulateValues();
             return rc;
         }
 
@@ -92,7 +94,20 @@ namespace Bev.Instruments.Msc15
                 ScotopicValue = value;
         }
 
+        private void InvalidateValues()
+        {
+            PhotopicValue = double.NaN;
+            ScotopicValue = double.NaN;
+            CctValue = double.NaN;
+        }
 
+        private void PopulateValues()
+        {
+            InvalidateValues();
+            GetCCT();
+            GetPhotopic();
+            GetScotopic();
+        }
 
         private string GetInstrumentType()
         {
