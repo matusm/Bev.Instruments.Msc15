@@ -74,6 +74,14 @@ namespace Bev.Instruments.Msc15
             return values;
         }
 
+        public double[] GetSpectralDataByPixel()
+        {
+            double[] values = new double[288];
+            GOMDMSC15_getSpectralDataByPixel(handle, values);
+            return values;
+        }
+
+
         private double GetInternalTemperature()
         {
             double value;
@@ -264,6 +272,9 @@ namespace Bev.Instruments.Msc15
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getWLMapping(int handle, double[] values);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getSpectralDataByPixel(int handle, double[] values);
 
         private const string passwordBev = "sdg4poiJ";
         private bool disposed = false;
