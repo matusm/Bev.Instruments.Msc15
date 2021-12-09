@@ -82,6 +82,20 @@ namespace Bev.Instruments.Msc15
             return spectrum;
         }
 
+        public SpectralValue[] GetVisSpectrum()
+        {
+            int nrOfSteps = 471;
+            double[] values = new double[nrOfSteps];
+            GOMDMSC15_getSpectralData(handle, 360, 1, nrOfSteps, values);
+            SpectralValue[] spectrum = new SpectralValue[nrOfSteps];
+            for (int i = 0; i < nrOfSteps; i++)
+            {
+                spectrum[i] = new SpectralValue(i+360, values[i]);
+            }
+            return spectrum;
+        }
+
+
         private double[] GetWLMapping()
         {
             double[] values = new double[288];
@@ -289,6 +303,11 @@ namespace Bev.Instruments.Msc15
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getSpectralDataByPixel(int handle, double[] values);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getSpectralData(int handle, double startWl, double deltaWl, int nrOfSteps, double[] value);
+
+
 
         private const string passwordBev = "sdg4poiJ";
         private bool disposed = false;
