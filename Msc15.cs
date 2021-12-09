@@ -35,7 +35,10 @@ namespace Bev.Instruments.Msc15
             GOMDMSC15_isOffsetInvalid(handle, out invalid);
             if (invalid)
             {
-                return -1;
+                if (HasShutter)
+                    MeasureDark();
+                else
+                    return -1;
             }
             int rc = GOMDMSC15_measure(handle);
             PopulateValues();
