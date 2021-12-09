@@ -70,7 +70,7 @@ namespace Bev.Instruments.Msc15
             return value;
         }
 
-        public SpectralValue[] GetSpectrum()
+        public SpectralValue[] GetNativeSpectrum()
         {
             SpectralValue[] spectrum = new SpectralValue[288];
             var wl = GetWLMapping();
