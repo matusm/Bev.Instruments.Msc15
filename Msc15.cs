@@ -11,38 +11,43 @@ namespace Bev.Instruments.Msc15
         {
             GOMDMSC15_setPassword(passwordBev);
             GOMDMSC15_getHandle(device, out handle);
-            InvalidateValues();
+            ValidMeasurement = false;
             DeviceName = device;
         }
 
-        public string DeviceName { get; private set; }
+        public string DeviceName { get; }
         public string InstrumentManufacturer => "Gigahertz-Optik";
         public string InstrumentType => GetInstrumentType();
         public string InstrumentSerialNumber => $"{GetDeviceSerialNumber()}{GetDetectorSerialNumber()}";
         public string InstrumentFirmwareVersion => GetDeviceSoftwareVersion();
         public string InstrumentID => $"{InstrumentType} FW:{InstrumentFirmwareVersion} SN:{InstrumentSerialNumber}";
         public bool HasShutter => DeviceHasShutter();
-
-        public double PhotopicValue { get; private set; }
-        public double ScotopicValue { get; private set; }
-        public double CctValue { get; private set; }
         public double InternalTemperature => GetInternalTemperature();
+        public bool ValidMeasurement { get; private set; }
 
-        public int Measure()
+        public double PhotopicValue => GetPhotopic();
+        public double ScotopicValue => GetScotopic();
+        public double CctValue => GetCCT();
+        public double PeakWL => GetPeak();
+        public double CentreWL => GetCentre();
+        public double CentroidWL => GetCentroid();
+        public double Fwhm => GetFwhm();
+
+        public void Measure()
         {
-            InvalidateValues();
-            bool invalid;
-            GOMDMSC15_isOffsetInvalid(handle, out invalid);
-            if (invalid)
+            ValidMeasurement = false;
+            GOMDMSC15_isOffsetInvalid(handle, out bool offsetIsInvalid);
+            if (offsetIsInvalid)
             {
                 if (HasShutter)
                     MeasureDark();
                 else
-                    return -1;
+                    return;
             }
             int rc = GOMDMSC15_measure(handle);
-            PopulateValues();
-            return rc;
+            if (rc < 0)
+                return;
+            ValidMeasurement = true;
         }
 
         public int MeasureDark()
@@ -95,7 +100,6 @@ namespace Bev.Instruments.Msc15
             return spectrum;
         }
 
-
         private double[] GetWLMapping()
         {
             double[] values = new double[288];
@@ -117,49 +121,81 @@ namespace Bev.Instruments.Msc15
             return value;
         }
 
-        private void GetCCT()
+        private double GetCCT()
         {
-            double value;
-            int rc = GOMDMSC15_getCCT(handle, out value);
+            if (!ValidMeasurement)
+                return double.NaN;
+            int rc = GOMDMSC15_getCCT(handle, out double value);
             if (rc < 0)
-                CctValue = double.NaN;
+                return double.NaN;
             else
-                CctValue = value;
+                return value;
         }
 
-        private void GetPhotopic()
+        private double GetPhotopic()
         {
-            double value;
-            int rc = GOMDMSC15_getPhotopic(handle, out value);
+            if (!ValidMeasurement)
+                return double.NaN;
+            int rc = GOMDMSC15_getPhotopic(handle, out double value);
             if (rc < 0)
-                PhotopicValue = double.NaN;
+                return double.NaN;
             else
-                PhotopicValue = value;
+                return value;
         }
 
-        private void GetScotopic()
+        private double GetScotopic()
         {
-            double value;
-            int rc = GOMDMSC15_getScotopic(handle, out value);
+            if (!ValidMeasurement)
+                return double.NaN;
+            int rc = GOMDMSC15_getScotopic(handle, out double value);
             if (rc < 0)
-                ScotopicValue = double.NaN;
+                return double.NaN;
             else
-                ScotopicValue = value;
+                return value;
         }
 
-        private void InvalidateValues()
+        private double GetPeak()
         {
-            PhotopicValue = double.NaN;
-            ScotopicValue = double.NaN;
-            CctValue = double.NaN;
+            if (!ValidMeasurement)
+                return double.NaN;
+            int rc = GOMDMSC15_getPeakWL(handle, out double value);
+            if (rc < 0)
+                return double.NaN;
+            else
+                return value;
         }
 
-        private void PopulateValues()
+        private double GetCentre()
         {
-            InvalidateValues();
-            GetCCT();
-            GetPhotopic();
-            GetScotopic();
+            if (!ValidMeasurement)
+                return double.NaN;
+            int rc = GOMDMSC15_getCentreWL(handle, out double value);
+            if (rc < 0)
+                return double.NaN;
+            else
+                return value;
+        }
+
+        private double GetCentroid()
+        {
+            if (!ValidMeasurement)
+                return double.NaN;
+            int rc = GOMDMSC15_getCentroidWL(handle, out double value);
+            if (rc < 0)
+                return double.NaN;
+            else
+                return value;
+        }
+
+        private double GetFwhm()
+        {
+            if (!ValidMeasurement)
+                return double.NaN;
+            int rc = GOMDMSC15_getFWHM(handle, out double value);
+            if (rc < 0)
+                return double.NaN;
+            else
+                return value;
         }
 
         private string GetInstrumentType()
@@ -267,6 +303,18 @@ namespace Bev.Instruments.Msc15
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getScotopic(int handle, out double value);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getPeakWL(int handle, out double value);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getCentreWL(int handle, out double value);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getCentroidWL(int handle, out double value);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getFWHM(int handle, out double value);
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_isOffsetInvalid(int handle, out bool value);
