@@ -125,81 +125,54 @@ namespace Bev.Instruments.Msc15
             return value;
         }
 
+        private double ProveFunctionReturns(int rc, double v, bool forcePositive)
+        {
+            if (!ValidMeasurement) return double.NaN;
+            if (rc < 0) return double.NaN;
+            if (v < 0 && forcePositive) return double.NaN;
+            return v;
+        }
+
         private double GetCCT()
         {
-            if (!ValidMeasurement)
-                return double.NaN;
             int rc = GOMDMSC15_getCCT(handle, out double value);
-            if (rc < 0)
-                return double.NaN;
-            else
-                return value;
+            return ProveFunctionReturns(rc, value, true);
         }
 
         private double GetPhotopic()
         {
-            if (!ValidMeasurement)
-                return double.NaN;
             int rc = GOMDMSC15_getPhotopic(handle, out double value);
-            if (rc < 0)
-                return double.NaN;
-            else
-                return value;
+            return ProveFunctionReturns(rc, value, true);
         }
 
         private double GetScotopic()
         {
-            if (!ValidMeasurement)
-                return double.NaN;
             int rc = GOMDMSC15_getScotopic(handle, out double value);
-            if (rc < 0)
-                return double.NaN;
-            else
-                return value;
+            return ProveFunctionReturns(rc, value, true);
         }
 
         private double GetPeak()
         {
-            if (!ValidMeasurement)
-                return double.NaN;
             int rc = GOMDMSC15_getPeakWL(handle, out double value);
-            if (rc < 0)
-                return double.NaN;
-            else
-                return value;
+            return ProveFunctionReturns(rc, value, true);
         }
 
         private double GetCentre()
         {
-            if (!ValidMeasurement)
-                return double.NaN;
             int rc = GOMDMSC15_getCentreWL(handle, out double value);
-            if (rc < 0)
-                return double.NaN;
-            else
-                return value;
+            return ProveFunctionReturns(rc, value, true);
         }
 
         private double GetCentroid()
         {
-            if (!ValidMeasurement)
-                return double.NaN;
             int rc = GOMDMSC15_getCentroidWL(handle, out double value);
-            if (rc < 0)
-                return double.NaN;
-            else
-                return value;
+            return ProveFunctionReturns(rc, value, true);
         }
 
         private double GetFwhm()
         {
-            if (!ValidMeasurement)
-                return double.NaN;
             int rc = GOMDMSC15_getFWHM(handle, out double value);
-            if (rc < 0)
-                return double.NaN;
-            else
-                return value;
+            return ProveFunctionReturns(rc, value, true);
         }
 
         private string GetInstrumentType()
