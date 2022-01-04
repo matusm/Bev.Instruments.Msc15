@@ -7,6 +7,10 @@ namespace Bev.Instruments.Msc15
 {
     public class Msc15 : IDisposable
     {
+        private const string passwordBev = "sdg4poiJ";
+        private bool disposed = false;
+        private int handle = 0;
+
         public Msc15(string device)
         {
             GOMDMSC15_setPassword(passwordBev);
@@ -282,6 +286,7 @@ namespace Bev.Instruments.Msc15
             return $"/{sn}";
         }
 
+        #region DLL imports
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_setPassword(string password);
@@ -355,11 +360,7 @@ namespace Bev.Instruments.Msc15
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getSpectralData(int handle, double startWl, double deltaWl, int nrOfSteps, double[] value);
 
-
-
-        private const string passwordBev = "sdg4poiJ";
-        private bool disposed = false;
-        private int handle = 0;
+        #endregion
 
         ~Msc15()
         {
