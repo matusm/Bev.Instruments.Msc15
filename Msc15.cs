@@ -20,6 +20,7 @@ namespace Bev.Instruments.Msc15
         }
 
         public string DeviceName { get; }
+        public string DllVersion => GetDllVersion();
         public string InstrumentManufacturer => "Gigahertz-Optik";
         public string InstrumentType => GetInstrumentType();
         public string InstrumentSerialNumber => $"{GetDeviceSerialNumber()}{GetDetectorSerialNumber()}";
@@ -259,6 +260,13 @@ namespace Bev.Instruments.Msc15
             return $"/{sn}";
         }
 
+        //TODO unclear documentation, might need StringBuilder
+        private string GetDllVersion()
+        {
+            GOMDMSC15_getDLLVersion(out double value);
+            return value.ToString();
+        }
+
         #region DLL imports
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
@@ -320,6 +328,9 @@ namespace Bev.Instruments.Msc15
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getFirmwareVersion(int handle, out double value);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getDLLVersion(out double value);
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getLastIntegrationTime(int handle, out double value);
