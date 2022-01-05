@@ -2,7 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-
 namespace Bev.Instruments.Msc15
 {
     public class Msc15 : IDisposable
@@ -74,8 +73,7 @@ namespace Bev.Instruments.Msc15
 
         public double GetLastIntegrationTime()
         {
-            double value;
-            int rc = GOMDMSC15_getLastIntegrationTime(handle, out value);
+            int rc = GOMDMSC15_getLastIntegrationTime(handle, out double value);
             if (rc < 0) return double.NaN;
             return value;
         }
@@ -121,8 +119,7 @@ namespace Bev.Instruments.Msc15
 
         private double GetInternalTemperature()
         {
-            double value;
-            GOMDMSC15_getTemperature(handle, out value);
+            GOMDMSC15_getTemperature(handle, out double value);
             return value;
         }
 
@@ -178,10 +175,8 @@ namespace Bev.Instruments.Msc15
 
         private string GetInstrumentType()
         {
-            int deviceType;
-            int detecorType;
-            GOMDMSC15_getMSC15DeviceType(handle, out deviceType);
-            GOMDMSC15_getDetectorType(handle, out detecorType);
+            GOMDMSC15_getMSC15DeviceType(handle, out int deviceType);
+            GOMDMSC15_getDetectorType(handle, out int detecorType);
             if (detecorType == 0)
                 return DeviceTypeToString(deviceType);
             return $"{DeviceTypeToString(deviceType)} + {DeviceTypeToString(detecorType)}";
@@ -189,10 +184,8 @@ namespace Bev.Instruments.Msc15
 
         private bool DeviceHasShutter()
         {
-            int deviceType;
-            int detecorType;
-            GOMDMSC15_getMSC15DeviceType(handle, out deviceType);
-            GOMDMSC15_getDetectorType(handle, out detecorType);
+            GOMDMSC15_getMSC15DeviceType(handle, out int deviceType);
+            GOMDMSC15_getDetectorType(handle, out int detecorType);
             return DeviceTypeHasShutter(deviceType) || DeviceTypeHasShutter(detecorType);
         }
 
@@ -220,7 +213,7 @@ namespace Bev.Instruments.Msc15
                 case 2:
                     return "MSC15-W";
                 case 3:
-                    return "LVMH-spectralux100";
+                    return "LVMH-spectralux100"; // legacy product?
                 case 4:
                     return "CSS-45";
                 case 5:
@@ -238,8 +231,7 @@ namespace Bev.Instruments.Msc15
 
         private string GetDeviceSoftwareVersion()
         {
-            double value;
-            GOMDMSC15_getFirmwareVersion(handle, out value);
+            GOMDMSC15_getFirmwareVersion(handle, out double value);
             return value.ToString();
         }
 
