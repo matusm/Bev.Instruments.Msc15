@@ -13,13 +13,14 @@ namespace Bev.Instruments.Msc15
         public Msc15(string device)
         {
             GOMDMSC15_setPassword(passwordBev);
+            DllVersion = GetDllVersion();
             GOMDMSC15_getHandle(device, out handle);
             ValidMeasurement = false;
             DeviceName = device;
         }
 
         public string DeviceName { get; }
-        public string DllVersion => GetDllVersion();
+        public string DllVersion { get; }
         public string InstrumentManufacturer => "Gigahertz-Optik";
         public string InstrumentType => GetInstrumentType();
         public string InstrumentSerialNumber => $"{GetDeviceSerialNumber()}{GetDetectorSerialNumber()}";
