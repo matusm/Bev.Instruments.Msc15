@@ -256,8 +256,9 @@ namespace Bev.Instruments.Msc15
         //TODO unclear documentation, might need StringBuilder
         private string GetDllVersion()
         {
-            GOMDMSC15_getDLLVersion(out double value);
-            return value.ToString();
+            StringBuilder sb = new StringBuilder(255);
+            GOMDMSC15_getDLLVersion(sb);
+            return sb.ToString();
         }
 
         #region DLL imports
@@ -323,7 +324,7 @@ namespace Bev.Instruments.Msc15
         private static extern int GOMDMSC15_getFirmwareVersion(int handle, out double value);
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern int GOMDMSC15_getDLLVersion(out double value);
+        private static extern int GOMDMSC15_getDLLVersion(StringBuilder sb);
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getLastIntegrationTime(int handle, out double value);
