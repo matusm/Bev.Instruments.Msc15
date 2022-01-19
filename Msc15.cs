@@ -26,9 +26,14 @@ namespace Bev.Instruments.Msc15
         public string InstrumentSerialNumber => $"{GetDeviceSerialNumber()}{GetDetectorSerialNumber()}";
         public string InstrumentFirmwareVersion => GetDeviceSoftwareVersion();
         public string InstrumentID => $"{InstrumentType} FW:{InstrumentFirmwareVersion} SN:{InstrumentSerialNumber}";
-        public bool HasShutter => DeviceHasShutter();
         public double InternalTemperature => GetInternalTemperature();
+
+        public int StatusNumber => GetStatus();
+        public bool WarningStatus => StatusNumber > 0 ? true : false;
+        public bool ErrorStatus => StatusNumber < 0 ? true : false;
+        public bool StatusOK => StatusNumber == 0 ? true : false;
         public bool ValidMeasurement { get; private set; }
+        public bool HasShutter => DeviceHasShutter();
 
         public double PhotopicValue => GetPhotopic();
         public double ScotopicValue => GetScotopic();
@@ -183,6 +188,12 @@ namespace Bev.Instruments.Msc15
             return $"{DeviceTypeToString(deviceType)} + {DeviceTypeToString(detecorType)}";
         }
 
+        private int GetStatus()
+        {
+            GOMDMSC15_readStatus(handle, out int status);
+            return status;
+        }
+
         private bool DeviceHasShutter()
         {
             GOMDMSC15_getMSC15DeviceType(handle, out int deviceType);
@@ -274,6 +285,9 @@ namespace Bev.Instruments.Msc15
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_measure(int handle);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_readStatus(int handle, out int status);
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getCCT(int handle, out double value);
