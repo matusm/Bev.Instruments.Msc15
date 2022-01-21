@@ -42,6 +42,7 @@ namespace Bev.Instruments.Msc15
         public double CentreWL => GetCentre();
         public double CentroidWL => GetCentroid();
         public double Fwhm => GetFwhm();
+        public ColorCoordinates ColorValues => GetColorCoordinates();
 
         public void Measure()
         {
@@ -179,6 +180,16 @@ namespace Bev.Instruments.Msc15
             return ProveFunctionReturns(rc, value, true);
         }
 
+        private ColorCoordinates GetColorCoordinates()
+        {
+            if (ErrorStatus)
+                return new ColorCoordinates();
+            GOMDMSC15_getColor(handle, out double X, out double Y, out double Z);
+            GOMDMSC15_getColorCIE1931(handle, out double x, out double y);
+            GOMDMSC15_getColorCIE1976(handle, out double u, out double v);
+            return new ColorCoordinates(X, Y, Z, x, y, u, v);
+        }
+
         private string GetInstrumentType()
         {
             GOMDMSC15_getMSC15DeviceType(handle, out int deviceType);
@@ -264,7 +275,6 @@ namespace Bev.Instruments.Msc15
             return $"/{sn}";
         }
 
-        //TODO unclear documentation, might need StringBuilder
         private string GetDllVersion()
         {
             StringBuilder sb = new StringBuilder(255);
@@ -351,6 +361,15 @@ namespace Bev.Instruments.Msc15
 
         [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GOMDMSC15_getSpectralData(int handle, double startWl, double deltaWl, int nrOfSteps, double[] value);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getColor(int handle, out double XValue, out double YValue, out double ZValue);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getColorCIE1931(int handle, out double xValue, out double yValue);
+
+        [DllImport("GOMDMSC15.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int GOMDMSC15_getColorCIE1976(int handle, out double uValue, out double vValue);
 
         #endregion
 

@@ -44,6 +44,7 @@
     <Compile Include="Msc15.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpectralValue.cs" />
+    <Compile Include="ColorCoordinates.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
