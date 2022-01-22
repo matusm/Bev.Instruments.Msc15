@@ -185,9 +185,7 @@ namespace Bev.Instruments.Msc15
             if (ErrorStatus)
                 return new ColorCoordinates();
             GOMDMSC15_getColor(handle, out double X, out double Y, out double Z);
-            GOMDMSC15_getColorCIE1931(handle, out double x, out double y);
-            GOMDMSC15_getColorCIE1976(handle, out double u, out double v);
-            return new ColorCoordinates(X, Y, Z, x, y, u, v);
+            return new ColorCoordinates(X, Y, Z);
         }
 
         private string GetInstrumentType()
