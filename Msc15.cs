@@ -88,8 +88,8 @@ namespace Bev.Instruments.Msc15
         public SpectralValue[] GetNativeSpectrum()
         {
             SpectralValue[] spectrum = new SpectralValue[288];
-            var wl = GetWLMapping();
-            var ir = GetSpectralDataByPixel();
+            double[] wl = GetWLMapping();
+            double[] ir = GetSpectralDataByPixel();
             for (int i = 0; i < spectrum.Length; i++)
             {
                 spectrum[i] = new SpectralValue(wl[i], ir[i]);
