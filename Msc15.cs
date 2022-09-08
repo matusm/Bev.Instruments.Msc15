@@ -7,8 +7,10 @@ namespace Bev.Instruments.Msc15
     public class Msc15 : IDisposable
     {
         private const string passwordBev = "sdg4poiJ";
+        private const int pixelNumber = 288;
         private bool disposed = false;
         private int handle = 0;
+
 
         public Msc15(string device)
         {
@@ -87,7 +89,7 @@ namespace Bev.Instruments.Msc15
 
         public SpectralValue[] GetNativeSpectrum()
         {
-            SpectralValue[] spectrum = new SpectralValue[288];
+            SpectralValue[] spectrum = new SpectralValue[pixelNumber];
             double[] wl = GetWLMapping();
             double[] ir = GetSpectralDataByPixel();
             for (int i = 0; i < spectrum.Length; i++)
@@ -112,14 +114,14 @@ namespace Bev.Instruments.Msc15
 
         private double[] GetWLMapping()
         {
-            double[] values = new double[288];
+            double[] values = new double[pixelNumber];
             GOMDMSC15_getWLMapping(handle, values);
             return values;
         }
 
         private double[] GetSpectralDataByPixel()
         {
-            double[] values = new double[288];
+            double[] values = new double[pixelNumber];
             GOMDMSC15_getSpectralDataByPixel(handle, values);
             return values;
         }
