@@ -1,4 +1,21 @@
-﻿namespace Bev.Instruments.Msc15
+﻿//*****************************************************************************
+//
+// Class as a container for color coordinates.
+//
+// Given the tristimulus values X, Y, Z the chromaticity coordinates x, y and
+// u' and v' are provided as computed properties. 
+//
+// This class has no other functionality.
+//
+// Usage:
+//   1) instantiate class with the three tristimulus values;
+//   2) instantiating the empty constructor creates an invalid object;
+//   3) consume them and derived values as properties;
+//   4) all properties are getters only.
+//
+//*****************************************************************************
+
+namespace Bev.Instruments.Msc15
 {
     public class ColorCoordinates
     {

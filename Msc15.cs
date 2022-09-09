@@ -1,4 +1,26 @@
-﻿using System;
+﻿//*****************************************************************************
+//
+// Library to communicate with some simple spectrophotometers
+// build by Gigahertz-Optik GmbH. (MSC15 and CSS-45)
+//
+// The main functionality is to translate the windows library functions
+// to a user friendly C# class.
+//
+// It provides many properties to consume various photometric values
+// and instrument characteristics. The values are provided as obtained by the
+// instrument, no correction is done.
+// Also raw spectra (in two flavours) can be downloaded. These spectra
+// can be corrected for a otherwise obtained resonsivity function via
+// Msc15Spectrum.GetCorrectedSpectrum(). 
+//
+// Usage:
+//   1) instantiate class with the device name;
+//   2) consume the wanted values as properties;
+//   3) all properties are getters only.
+//
+//*****************************************************************************
+
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -10,7 +32,6 @@ namespace Bev.Instruments.Msc15
         private const int pixelNumber = 288;
         private bool disposed = false;
         private int handle = 0;
-
 
         public Msc15(string device)
         {
@@ -28,7 +49,6 @@ namespace Bev.Instruments.Msc15
         public string InstrumentSerialNumber => $"{GetDeviceSerialNumber()}{GetDetectorSerialNumber()}";
         public string InstrumentFirmwareVersion => GetDeviceSoftwareVersion();
         public string InstrumentID => $"{InstrumentType} FW:{InstrumentFirmwareVersion} SN:{InstrumentSerialNumber}";
-        public double InternalTemperature => GetInternalTemperature();
 
         public int StatusNumber => GetStatus();
         public bool WarningStatus => StatusNumber > 0 ? true : false;
@@ -45,6 +65,7 @@ namespace Bev.Instruments.Msc15
         public double CentroidWL => GetCentroid();
         public double Fwhm => GetFwhm();
         public ColorCoordinates ColorValues => GetColorCoordinates();
+        public double InternalTemperature => GetInternalTemperature();
 
         public void Measure()
         {
@@ -107,10 +128,14 @@ namespace Bev.Instruments.Msc15
             SpectralValue[] spectrum = new SpectralValue[nrOfSteps];
             for (int i = 0; i < nrOfSteps; i++)
             {
-                spectrum[i] = new SpectralValue(i+360, values[i]);
+                spectrum[i] = new SpectralValue(i + 360, values[i]);
             }
             return spectrum;
         }
+
+        public Msc15Spectrum GetNativeMsc15Spectrum() => new Msc15Spectrum(GetNativeSpectrum(), InstrumentSerialNumber);
+
+        public Msc15Spectrum GetVisMsc15Spectrum() => new Msc15Spectrum(GetVisSpectrum(), InstrumentSerialNumber);
 
         private double[] GetWLMapping()
         {
