@@ -300,6 +300,7 @@ namespace Bev.Instruments.Msc15
             return $"/{sn}";
         }
 
+        // TODO: for S-SDK-MSC15_V2022.1 and S-SDK-MSC15_V2022.2 this call returns n/a !
         private string GetDllVersion()
         {
             StringBuilder sb = new StringBuilder(255);
