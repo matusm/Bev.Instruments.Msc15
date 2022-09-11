@@ -1,12 +1,12 @@
 var group__spec_measurement_settings =
 [
-    [ "GOMDMSC15_getLastIntegrationTime", "group__spec_measurement_settings_ga3e917a0e118b73f2dfc9c96d1e7484d9.html#ga3e917a0e118b73f2dfc9c96d1e7484d9", null ],
-    [ "GOMDMSC15_getWLBorders", "group__spec_measurement_settings_ga51563b060aed8b681dc1f6f15c1957a6.html#ga51563b060aed8b681dc1f6f15c1957a6", null ],
-    [ "GOMDMSC15_getWLMapping", "group__spec_measurement_settings_gada7479f2233c4d41334867c9e169568c.html#gada7479f2233c4d41334867c9e169568c", null ],
-    [ "GOMDMSC15_getSpectralDataByPixel", "group__spec_measurement_settings_ga2da2d500292f7a9dff1de8680d1435ab.html#ga2da2d500292f7a9dff1de8680d1435ab", null ],
-    [ "GOMDMSC15_getSpectralData", "group__spec_measurement_settings_ga1931619f8415bbbafc20d1184d15b6ad.html#ga1931619f8415bbbafc20d1184d15b6ad", null ],
-    [ "GOMDMSC15_getPeakWL", "group__spec_measurement_settings_ga91d89973ebeec44b22ec8d3b46af53b6.html#ga91d89973ebeec44b22ec8d3b46af53b6", null ],
-    [ "GOMDMSC15_getCentreWL", "group__spec_measurement_settings_gab9ad65d101c2fab3c4646e065e0de4ac.html#gab9ad65d101c2fab3c4646e065e0de4ac", null ],
-    [ "GOMDMSC15_getCentroidWL", "group__spec_measurement_settings_ga6741ac7be4260e0fe53218d2eecefbda.html#ga6741ac7be4260e0fe53218d2eecefbda", null ],
-    [ "GOMDMSC15_getFWHM", "group__spec_measurement_settings_ga569f837835043022263766dd7d8ab257.html#ga569f837835043022263766dd7d8ab257", null ]
+    [ "GOMDMSC15_getLastIntegrationTime", "group__spec_measurement_settings_gacf1c6aba4bec1d7aa29f27673efa5c15.html#gacf1c6aba4bec1d7aa29f27673efa5c15", null ],
+    [ "GOMDMSC15_getWLBorders", "group__spec_measurement_settings_ga5fb290ba54ccc58ea773eb70e94b7f06.html#ga5fb290ba54ccc58ea773eb70e94b7f06", null ],
+    [ "GOMDMSC15_getWLMapping", "group__spec_measurement_settings_ga7b088eeca725d61bc186ea2b5f66f4d8.html#ga7b088eeca725d61bc186ea2b5f66f4d8", null ],
+    [ "GOMDMSC15_getSpectralDataByPixel", "group__spec_measurement_settings_ga8a1adb0a9772edfb580471b79d8ef926.html#ga8a1adb0a9772edfb580471b79d8ef926", null ],
+    [ "GOMDMSC15_getSpectralData", "group__spec_measurement_settings_ga3adf4db2ade2139e43e433fc57892381.html#ga3adf4db2ade2139e43e433fc57892381", null ],
+    [ "GOMDMSC15_getPeakWL", "group__spec_measurement_settings_ga24c4d50446040f6aac0d3f9bf2ba07ef.html#ga24c4d50446040f6aac0d3f9bf2ba07ef", null ],
+    [ "GOMDMSC15_getCentreWL", "group__spec_measurement_settings_gac175968a5f859f769fd70589b18c8802.html#gac175968a5f859f769fd70589b18c8802", null ],
+    [ "GOMDMSC15_getCentroidWL", "group__spec_measurement_settings_ga252455c64abf07eae3441613e3e37023.html#ga252455c64abf07eae3441613e3e37023", null ],
+    [ "GOMDMSC15_getFWHM", "group__spec_measurement_settings_ga62d099bbab41bff47cd3155aff47367e.html#ga62d099bbab41bff47cd3155aff47367e", null ]
 ];
