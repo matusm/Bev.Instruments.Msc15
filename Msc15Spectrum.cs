@@ -41,8 +41,9 @@ namespace Bev.Instruments.Msc15
         public SpectrumType Type { get; } = SpectrumType.Invalid;
         public SpectralValue[] RawSpectrum => rawSpectrum;
         public int Length => rawSpectrum.Length;
+        private Msc15Spectrum InvalidSpectrum => new Msc15Spectrum();
 
-        public Msc15Spectrum() { } // for undefined value
+        public Msc15Spectrum() { } // creates an invalid spectrum
 
         public Msc15Spectrum(SpectralValue[] raw, string id)
         {
@@ -55,9 +56,9 @@ namespace Bev.Instruments.Msc15
         public Msc15Spectrum GetCorrectedSpectrum(Msc15Spectrum responsivity)
         {
             if (responsivity.SpectrometerID != SpectrometerID)
-                return new Msc15Spectrum();
+                return InvalidSpectrum;
             if (responsivity.Type != Type)
-                return new Msc15Spectrum();
+                return InvalidSpectrum;
             SpectralValue[] correctedSpectrumValues = new SpectralValue[responsivity.Length];
             for (int i = 0; i < responsivity.Length; i++)
             {
